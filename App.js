@@ -79,6 +79,15 @@ export default function App() {
             }
             setScore(prevScore => prevScore + correctScore)
             setChecked(true)
+            setQuizItems(prevItems => {
+                return prevItems.map(item => {
+                    if (item.selectedans === item.correct_answer) {
+                        return {...item, ischecked: "checked", iscorrect: "correct"}
+                    } else {
+                        return {...item, ischecked: "checked"}
+                    }
+                })
+            })
         }
     }
     
@@ -86,7 +95,10 @@ export default function App() {
         return <QuizElement 
                     key={nanoid()}
                     question={item.question}
+                    correct_answer={item.correct_answer}
                     selectedans={item.selectedans}
+                    ischecked={item.ischecked}
+                    iscorrect={item.iscorrect}
                     randAnsArr={item.randAnsArr}
                     handleClick={handleClick}
                 />
