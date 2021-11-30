@@ -15,7 +15,6 @@ export default function App() {
         fetch("https://opentdb.com/api.php?amount=5")
             .then(res => res.json())
             .then(data => setQuizItems(data.results))
-        setLoading(false)
     }, [isNewGame])
     
     function startGame() {
@@ -106,24 +105,30 @@ export default function App() {
 
     return (
         <main>
-            {game && quizItems.length > 0 ?  
-                <div className="quiz-container">
-                    {quizElement}
-                    <button 
-                        className="checkans-button" 
-                        onClick={checkAnswer}
-                    >
-                        Check Answers!
-                    </button>
-                    {checked && <h4>Your Score: {score}/{quizItems.length}</h4>}
-                    {checked && 
+            {game ? 
+                (quizItems.length > 0 ?
+                    <div className="quiz-container">
+                        {quizElement}
                         <button 
-                            className="newgame-button" 
-                            onClick={newGame}
+                            className="checkans-button" 
+                            onClick={checkAnswer}
                         >
-                            New Game
-                        </button>}
-                </div>
+                            Check Answers!
+                        </button>
+                        {checked && <h4>Your Score: {score}/{quizItems.length}</h4>}
+                        {checked && 
+                            <button 
+                                className="newgame-button" 
+                                onClick={newGame}
+                            >
+                                New Game
+                            </button>}
+                    </div>
+                    :
+                    <div>
+                        Loading...
+                    </div>
+                )
                 :
                 <div className="intro-container">
                     <h1 className="intro-title">Quizzical</h1>
